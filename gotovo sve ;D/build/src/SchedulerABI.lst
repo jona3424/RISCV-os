@@ -1,0 +1,787 @@
+GAS LISTING /tmp/ccUCloaK.s 			page 1
+
+
+   1              		.file	"SchedulerABI.cpp"
+   2              		.option pic
+   3              		.option norelax
+   4              		.text
+   5              	.Ltext0:
+   6              		.align	2
+   7              		.globl	_ZN12SchedulerABI3getEv
+   9              	_ZN12SchedulerABI3getEv:
+  10              	.LFB13:
+  11              		.file 1 "src/SchedulerABI.cpp"
+   1:src/SchedulerABI.cpp **** //
+   2:src/SchedulerABI.cpp **** // Created by os on 5/22/22.
+   3:src/SchedulerABI.cpp **** //
+   4:src/SchedulerABI.cpp **** #include "../h/SchedulerABI.hpp"
+   5:src/SchedulerABI.cpp **** #include "../h/ThreadABI.hpp"
+   6:src/SchedulerABI.cpp **** 
+   7:src/SchedulerABI.cpp **** ThreadABI *SchedulerABI::headsleep = nullptr;
+   8:src/SchedulerABI.cpp **** ThreadABI *SchedulerABI::headready = nullptr;
+   9:src/SchedulerABI.cpp **** ThreadABI *SchedulerABI::tailready = nullptr;
+  10:src/SchedulerABI.cpp **** 
+  11:src/SchedulerABI.cpp **** ThreadABI *SchedulerABI::get() {
+  12              		.loc 1 11 32
+  13              		.cfi_startproc
+  14              	.LVL0:
+  15 0000 130101FF 		addi	sp,sp,-16
+  16              		.cfi_def_cfa_offset 16
+  17 0004 23348100 		sd	s0,8(sp)
+  18              		.cfi_offset 8, -8
+  19 0008 13040101 		addi	s0,sp,16
+  20              		.cfi_def_cfa 8, 0
+  12:src/SchedulerABI.cpp **** 
+  13:src/SchedulerABI.cpp ****     if (headready == nullptr)return ThreadABI::idle;
+  21              		.loc 1 13 5
+  22              		.loc 1 13 19 is_stmt 0
+  23 000c 17050000 		ld	a0,.LANCHOR0
+  23      03350500 
+  24              	.LVL1:
+  25              		.loc 1 13 5
+  26 0014 63060502 		beqz	a0,.L6
+  14:src/SchedulerABI.cpp ****     if (tailready == headready) {
+  27              		.loc 1 14 5 is_stmt 1
+  28              	.LBB2:
+  29              		.loc 1 14 19 is_stmt 0
+  30 0018 97070000 		ld	a5,.LANCHOR0+8
+  30      83B70700 
+  31              		.loc 1 14 5
+  32 0020 6308F502 		beq	a0,a5,.L7
+  33              	.LBE2:
+  15:src/SchedulerABI.cpp ****         ThreadABI *tmp = headready;
+  16:src/SchedulerABI.cpp ****         tailready = nullptr;
+  17:src/SchedulerABI.cpp ****         headready = nullptr;
+  18:src/SchedulerABI.cpp ****         return tmp;
+  19:src/SchedulerABI.cpp ****     }
+  20:src/SchedulerABI.cpp ****     ThreadABI *tmp = headready;
+  34              		.loc 1 20 5 is_stmt 1
+  35              	.LVL2:
+  21:src/SchedulerABI.cpp ****     headready = headready->next;
+GAS LISTING /tmp/ccUCloaK.s 			page 2
+
+
+  36              		.loc 1 21 5
+  37              		.loc 1 21 28 is_stmt 0
+  38 0024 83370500 		ld	a5,0(a0)
+  39              		.loc 1 21 15
+  40 0028 17070000 		sd	a5,.LANCHOR0,a4
+  40      2330F700 
+  22:src/SchedulerABI.cpp **** //    ThreadABI::running=tmp;
+  23:src/SchedulerABI.cpp ****     tmp->next= nullptr;
+  41              		.loc 1 23 5 is_stmt 1
+  42              		.loc 1 23 14 is_stmt 0
+  43 0030 23300500 		sd	zero,0(a0)
+  24:src/SchedulerABI.cpp **** 
+  25:src/SchedulerABI.cpp ****     return tmp;
+  44              		.loc 1 25 5 is_stmt 1
+  45              	.LVL3:
+  46              	.L1:
+  26:src/SchedulerABI.cpp **** }
+  47              		.loc 1 26 1 is_stmt 0
+  48 0034 03348100 		ld	s0,8(sp)
+  49              		.cfi_remember_state
+  50              		.cfi_restore 8
+  51              		.cfi_def_cfa 2, 16
+  52 0038 13010101 		addi	sp,sp,16
+  53              		.cfi_def_cfa_offset 0
+  54 003c 67800000 		jr	ra
+  55              	.L6:
+  56              		.cfi_restore_state
+  13:src/SchedulerABI.cpp ****     if (tailready == headready) {
+  57              		.loc 1 13 30 is_stmt 1 discriminator 1
+  13:src/SchedulerABI.cpp ****     if (tailready == headready) {
+  58              		.loc 1 13 48 is_stmt 0 discriminator 1
+  59 0040 97070000 		la	a5,_ZN9ThreadABI4idleE
+  59      83B70700 
+  60 0048 03B50700 		ld	a0,0(a5)
+  61 004c 6FF09FFE 		j	.L1
+  62              	.L7:
+  63              	.LBB4:
+  64              	.LBB3:
+  15:src/SchedulerABI.cpp ****         tailready = nullptr;
+  65              		.loc 1 15 9 is_stmt 1
+  66              	.LVL4:
+  16:src/SchedulerABI.cpp ****         headready = nullptr;
+  67              		.loc 1 16 9
+  16:src/SchedulerABI.cpp ****         headready = nullptr;
+  68              		.loc 1 16 19 is_stmt 0
+  69 0050 97070000 		lla	a5,.LANCHOR0
+  69      93870700 
+  70 0058 23B40700 		sd	zero,8(a5)
+  17:src/SchedulerABI.cpp ****         return tmp;
+  71              		.loc 1 17 9 is_stmt 1
+  17:src/SchedulerABI.cpp ****         return tmp;
+  72              		.loc 1 17 19 is_stmt 0
+  73 005c 23B00700 		sd	zero,0(a5)
+  18:src/SchedulerABI.cpp ****     }
+  74              		.loc 1 18 9 is_stmt 1
+  18:src/SchedulerABI.cpp ****     }
+  75              		.loc 1 18 16 is_stmt 0
+GAS LISTING /tmp/ccUCloaK.s 			page 3
+
+
+  76 0060 6FF05FFD 		j	.L1
+  77              	.LBE3:
+  78              	.LBE4:
+  79              		.cfi_endproc
+  80              	.LFE13:
+  82              		.align	2
+  83              		.globl	_ZN12SchedulerABI3putEP9ThreadABI
+  85              	_ZN12SchedulerABI3putEP9ThreadABI:
+  86              	.LFB14:
+  27:src/SchedulerABI.cpp **** 
+  28:src/SchedulerABI.cpp **** void SchedulerABI::put(ThreadABI *t) {
+  87              		.loc 1 28 38 is_stmt 1
+  88              		.cfi_startproc
+  89              	.LVL5:
+  90 0064 130101FF 		addi	sp,sp,-16
+  91              		.cfi_def_cfa_offset 16
+  92 0068 23348100 		sd	s0,8(sp)
+  93              		.cfi_offset 8, -8
+  94 006c 13040101 		addi	s0,sp,16
+  95              		.cfi_def_cfa 8, 0
+  29:src/SchedulerABI.cpp ****     t->state=ThreadABI::READY;
+  96              		.loc 1 29 5
+  97              		.loc 1 29 13 is_stmt 0
+  98 0070 93071000 		li	a5,1
+  99 0074 23A6F500 		sw	a5,12(a1)
+  30:src/SchedulerABI.cpp ****     if(t==ThreadABI::idle)return;
+ 100              		.loc 1 30 5 is_stmt 1
+ 101              		.loc 1 30 9 is_stmt 0
+ 102 0078 97070000 		la	a5,_ZN9ThreadABI4idleE
+ 102      83B70700 
+ 103 0080 83B70700 		ld	a5,0(a5)
+ 104              		.loc 1 30 5
+ 105 0084 638AB702 		beq	a5,a1,.L8
+  31:src/SchedulerABI.cpp ****     if (t == nullptr)return;
+ 106              		.loc 1 31 5 is_stmt 1
+ 107 0088 63880502 		beqz	a1,.L8
+  32:src/SchedulerABI.cpp ****     if (headready == nullptr) {
+ 108              		.loc 1 32 5
+ 109              		.loc 1 32 19 is_stmt 0
+ 110 008c 97070000 		ld	a5,.LANCHOR0
+ 110      83B70700 
+ 111              		.loc 1 32 5
+ 112 0094 63880702 		beqz	a5,.L12
+  33:src/SchedulerABI.cpp ****         headready = t;
+  34:src/SchedulerABI.cpp ****         tailready = t;
+  35:src/SchedulerABI.cpp ****         t->next= nullptr;
+  36:src/SchedulerABI.cpp ****         return;
+  37:src/SchedulerABI.cpp ****     }
+  38:src/SchedulerABI.cpp **** 
+  39:src/SchedulerABI.cpp ****     tailready->next=t;
+ 113              		.loc 1 39 5 is_stmt 1
+ 114              		.loc 1 39 16 is_stmt 0
+ 115 0098 97070000 		lla	a5,.LANCHOR0
+ 115      93870700 
+ 116 00a0 03B78700 		ld	a4,8(a5)
+ 117              		.loc 1 39 20
+ 118 00a4 2330B700 		sd	a1,0(a4)
+GAS LISTING /tmp/ccUCloaK.s 			page 4
+
+
+  40:src/SchedulerABI.cpp ****     tailready=tailready->next;
+ 119              		.loc 1 40 5 is_stmt 1
+ 120              		.loc 1 40 26 is_stmt 0
+ 121 00a8 03B78700 		ld	a4,8(a5)
+ 122 00ac 03370700 		ld	a4,0(a4)
+ 123              		.loc 1 40 14
+ 124 00b0 23B4E700 		sd	a4,8(a5)
+  41:src/SchedulerABI.cpp ****     tailready->next= nullptr;
+ 125              		.loc 1 41 5 is_stmt 1
+ 126              		.loc 1 41 20 is_stmt 0
+ 127 00b4 23300700 		sd	zero,0(a4)
+ 128              	.L8:
+  42:src/SchedulerABI.cpp **** 
+  43:src/SchedulerABI.cpp **** }
+ 129              		.loc 1 43 1
+ 130 00b8 03348100 		ld	s0,8(sp)
+ 131              		.cfi_remember_state
+ 132              		.cfi_restore 8
+ 133              		.cfi_def_cfa 2, 16
+ 134 00bc 13010101 		addi	sp,sp,16
+ 135              		.cfi_def_cfa_offset 0
+ 136 00c0 67800000 		jr	ra
+ 137              	.L12:
+ 138              		.cfi_restore_state
+  33:src/SchedulerABI.cpp ****         tailready = t;
+ 139              		.loc 1 33 9 is_stmt 1
+  33:src/SchedulerABI.cpp ****         tailready = t;
+ 140              		.loc 1 33 19 is_stmt 0
+ 141 00c4 97070000 		lla	a5,.LANCHOR0
+ 141      93870700 
+ 142 00cc 23B0B700 		sd	a1,0(a5)
+  34:src/SchedulerABI.cpp ****         t->next= nullptr;
+ 143              		.loc 1 34 9 is_stmt 1
+  34:src/SchedulerABI.cpp ****         t->next= nullptr;
+ 144              		.loc 1 34 19 is_stmt 0
+ 145 00d0 23B4B700 		sd	a1,8(a5)
+  35:src/SchedulerABI.cpp ****         return;
+ 146              		.loc 1 35 9 is_stmt 1
+  35:src/SchedulerABI.cpp ****         return;
+ 147              		.loc 1 35 16 is_stmt 0
+ 148 00d4 23B00500 		sd	zero,0(a1)
+  36:src/SchedulerABI.cpp ****     }
+ 149              		.loc 1 36 9 is_stmt 1
+ 150 00d8 6FF01FFE 		j	.L8
+ 151              		.cfi_endproc
+ 152              	.LFE14:
+ 154              		.align	2
+ 155              		.globl	_ZN12SchedulerABI5sleepEm
+ 157              	_ZN12SchedulerABI5sleepEm:
+ 158              	.LFB15:
+  44:src/SchedulerABI.cpp **** 
+  45:src/SchedulerABI.cpp **** void SchedulerABI::sleep(time_t time) {
+ 159              		.loc 1 45 39
+ 160              		.cfi_startproc
+ 161              	.LVL6:
+ 162 00dc 130101FF 		addi	sp,sp,-16
+ 163              		.cfi_def_cfa_offset 16
+GAS LISTING /tmp/ccUCloaK.s 			page 5
+
+
+ 164 00e0 23341100 		sd	ra,8(sp)
+ 165 00e4 23308100 		sd	s0,0(sp)
+ 166              		.cfi_offset 1, -8
+ 167              		.cfi_offset 8, -16
+ 168 00e8 13040101 		addi	s0,sp,16
+ 169              		.cfi_def_cfa 8, 0
+  46:src/SchedulerABI.cpp **** 
+  47:src/SchedulerABI.cpp ****     ThreadABI *tmp2=ThreadABI::running;
+ 170              		.loc 1 47 5
+ 171              		.loc 1 47 16 is_stmt 0
+ 172 00ec 97070000 		la	a5,_ZN9ThreadABI7runningE
+ 172      83B70700 
+ 173 00f4 83B60700 		ld	a3,0(a5)
+ 174              	.LVL7:
+  48:src/SchedulerABI.cpp ****     tmp2->state=ThreadABI::State::SLEEP;
+ 175              		.loc 1 48 5 is_stmt 1
+ 176              		.loc 1 48 16 is_stmt 0
+ 177 00f8 93072000 		li	a5,2
+ 178 00fc 23A6F600 		sw	a5,12(a3)
+  49:src/SchedulerABI.cpp ****     tmp2->sleeptime=time;
+ 179              		.loc 1 49 5 is_stmt 1
+ 180              		.loc 1 49 20 is_stmt 0
+ 181 0100 23BCA602 		sd	a0,56(a3)
+  50:src/SchedulerABI.cpp **** 
+  51:src/SchedulerABI.cpp ****     //prevezivanje linked liste spavajucih threadova
+  52:src/SchedulerABI.cpp **** //    if(tmp== nullptr){
+  53:src/SchedulerABI.cpp **** //        headsleep=tmp2;
+  54:src/SchedulerABI.cpp **** //    }
+  55:src/SchedulerABI.cpp **** //    else
+  56:src/SchedulerABI.cpp **** //    while (tmp) {
+  57:src/SchedulerABI.cpp **** //        if(tmp->sleeptime<tmp2->sleeptime){
+  58:src/SchedulerABI.cpp **** //            onebehind=tmp;
+  59:src/SchedulerABI.cpp **** //            tmp=tmp->next;
+  60:src/SchedulerABI.cpp **** //        }
+  61:src/SchedulerABI.cpp **** //        else{
+  62:src/SchedulerABI.cpp **** //            if(tmp==headsleep){
+  63:src/SchedulerABI.cpp **** //                tmp2->next=tmp;
+  64:src/SchedulerABI.cpp **** //                headsleep=tmp2;
+  65:src/SchedulerABI.cpp **** //                break;
+  66:src/SchedulerABI.cpp **** //            }
+  67:src/SchedulerABI.cpp **** //            if(tmp->next== nullptr){
+  68:src/SchedulerABI.cpp **** //
+  69:src/SchedulerABI.cpp **** //            }
+  70:src/SchedulerABI.cpp **** //            tmp2->next=tmp;
+  71:src/SchedulerABI.cpp **** //            onebehind->next=tmp2;
+  72:src/SchedulerABI.cpp **** //            break;
+  73:src/SchedulerABI.cpp **** //        }
+  74:src/SchedulerABI.cpp **** //    }
+  75:src/SchedulerABI.cpp ****     if (headsleep == nullptr || headsleep->sleeptime > tmp2->sleeptime) {
+ 182              		.loc 1 75 5 is_stmt 1
+ 183              	.LBB5:
+ 184              		.loc 1 75 19 is_stmt 0
+ 185 0104 97070000 		ld	a5,.LANCHOR0+16
+ 185      83B70700 
+ 186              		.loc 1 75 5
+ 187 010c 63860700 		beqz	a5,.L14
+ 188              		.loc 1 75 44 discriminator 1
+GAS LISTING /tmp/ccUCloaK.s 			page 6
+
+
+ 189 0110 03B78703 		ld	a4,56(a5)
+ 190              		.loc 1 75 30 discriminator 1
+ 191 0114 6374E502 		bleu	a4,a0,.L15
+ 192              	.L14:
+  76:src/SchedulerABI.cpp ****         tmp2->next = headsleep;
+ 193              		.loc 1 76 9 is_stmt 1
+ 194              		.loc 1 76 20 is_stmt 0
+ 195 0118 23B0F600 		sd	a5,0(a3)
+  77:src/SchedulerABI.cpp ****         headsleep = tmp2;
+ 196              		.loc 1 77 9 is_stmt 1
+ 197              		.loc 1 77 19 is_stmt 0
+ 198 011c 97070000 		sd	a3,.LANCHOR0+16,a5
+ 198      23B0D700 
+ 199              	.L16:
+ 200              	.LBE5:
+  78:src/SchedulerABI.cpp ****     }
+  79:src/SchedulerABI.cpp ****     else {
+  80:src/SchedulerABI.cpp ****         ThreadABI *tmp = headsleep;
+  81:src/SchedulerABI.cpp **** 
+  82:src/SchedulerABI.cpp ****         while (tmp->next != nullptr && tmp->next->sleeptime < tmp2->sleeptime) {
+  83:src/SchedulerABI.cpp ****             tmp = tmp->next;
+  84:src/SchedulerABI.cpp ****         }
+  85:src/SchedulerABI.cpp ****         tmp2->next = tmp->next;
+  86:src/SchedulerABI.cpp ****         tmp->next = tmp2;
+  87:src/SchedulerABI.cpp ****     }
+  88:src/SchedulerABI.cpp ****     //ostala promjena kontexta;
+  89:src/SchedulerABI.cpp ****     ThreadABI::yield();
+ 201              		.loc 1 89 5 is_stmt 1
+ 202              		.loc 1 89 21 is_stmt 0
+ 203 0124 97000000 		call	_ZN9ThreadABI5yieldEv@plt
+ 203      E7800000 
+ 204              	.LVL8:
+  90:src/SchedulerABI.cpp **** }
+ 205              		.loc 1 90 1
+ 206 012c 83308100 		ld	ra,8(sp)
+ 207              		.cfi_remember_state
+ 208              		.cfi_restore 1
+ 209 0130 03340100 		ld	s0,0(sp)
+ 210              		.cfi_restore 8
+ 211              		.cfi_def_cfa 2, 16
+ 212 0134 13010101 		addi	sp,sp,16
+ 213              		.cfi_def_cfa_offset 0
+ 214 0138 67800000 		jr	ra
+ 215              	.LVL9:
+ 216              	.L15:
+ 217              		.cfi_restore_state
+ 218              	.LBB7:
+ 219              	.LBB6:
+  82:src/SchedulerABI.cpp ****             tmp = tmp->next;
+ 220              		.loc 1 82 9 is_stmt 1
+  82:src/SchedulerABI.cpp ****             tmp = tmp->next;
+ 221              		.loc 1 82 37
+ 222 013c 13860700 		mv	a2,a5
+  82:src/SchedulerABI.cpp ****             tmp = tmp->next;
+ 223              		.loc 1 82 21 is_stmt 0
+ 224 0140 83B70700 		ld	a5,0(a5)
+ 225              	.LVL10:
+GAS LISTING /tmp/ccUCloaK.s 			page 7
+
+
+  82:src/SchedulerABI.cpp ****             tmp = tmp->next;
+ 226              		.loc 1 82 37
+ 227 0144 63860700 		beqz	a5,.L17
+  82:src/SchedulerABI.cpp ****             tmp = tmp->next;
+ 228              		.loc 1 82 51 discriminator 1
+ 229 0148 03B78703 		ld	a4,56(a5)
+  82:src/SchedulerABI.cpp ****             tmp = tmp->next;
+ 230              		.loc 1 82 37 discriminator 1
+ 231 014c E368A7FE 		bltu	a4,a0,.L15
+ 232              	.L17:
+  85:src/SchedulerABI.cpp ****         tmp->next = tmp2;
+ 233              		.loc 1 85 9 is_stmt 1
+  85:src/SchedulerABI.cpp ****         tmp->next = tmp2;
+ 234              		.loc 1 85 20 is_stmt 0
+ 235 0150 23B0F600 		sd	a5,0(a3)
+  86:src/SchedulerABI.cpp ****     }
+ 236              		.loc 1 86 9 is_stmt 1
+  86:src/SchedulerABI.cpp ****     }
+ 237              		.loc 1 86 19 is_stmt 0
+ 238 0154 2330D600 		sd	a3,0(a2)
+ 239 0158 6FF0DFFC 		j	.L16
+ 240              	.LBE6:
+ 241              	.LBE7:
+ 242              		.cfi_endproc
+ 243              	.LFE15:
+ 245              		.align	2
+ 246              		.globl	_ZN12SchedulerABI20getInstanceSchedulerEv
+ 248              	_ZN12SchedulerABI20getInstanceSchedulerEv:
+ 249              	.LFB16:
+  91:src/SchedulerABI.cpp **** 
+  92:src/SchedulerABI.cpp **** SchedulerABI &SchedulerABI::getInstanceScheduler() {
+ 250              		.loc 1 92 52 is_stmt 1
+ 251              		.cfi_startproc
+ 252 015c 130101FF 		addi	sp,sp,-16
+ 253              		.cfi_def_cfa_offset 16
+ 254 0160 23348100 		sd	s0,8(sp)
+ 255              		.cfi_offset 8, -8
+ 256 0164 13040101 		addi	s0,sp,16
+ 257              		.cfi_def_cfa 8, 0
+  93:src/SchedulerABI.cpp ****     static SchedulerABI instance;
+ 258              		.loc 1 93 5
+ 259              		.loc 1 93 25 is_stmt 0
+ 260 0168 97070000 		lbu	a5,.LANCHOR0+24
+ 260      83C70700 
+ 261 0170 63980700 		bnez	a5,.L20
+ 262              		.loc 1 93 25 discriminator 1
+ 263 0174 93071000 		li	a5,1
+ 264 0178 17070000 		sb	a5,.LANCHOR0+24,a4
+ 264      2300F700 
+ 265              	.L20:
+  94:src/SchedulerABI.cpp ****     return instance;
+ 266              		.loc 1 94 5 is_stmt 1
+  95:src/SchedulerABI.cpp **** }
+ 267              		.loc 1 95 1 is_stmt 0
+ 268 0180 17050000 		lla	a0,.LANCHOR0+32
+ 268      13050500 
+ 269 0188 03348100 		ld	s0,8(sp)
+GAS LISTING /tmp/ccUCloaK.s 			page 8
+
+
+ 270              		.cfi_restore 8
+ 271              		.cfi_def_cfa 2, 16
+ 272 018c 13010101 		addi	sp,sp,16
+ 273              		.cfi_def_cfa_offset 0
+ 274 0190 67800000 		jr	ra
+ 275              		.cfi_endproc
+ 276              	.LFE16:
+ 278              		.globl	_ZN12SchedulerABI9tailreadyE
+ 279              		.globl	_ZN12SchedulerABI9headreadyE
+ 280              		.globl	_ZN12SchedulerABI9headsleepE
+ 281              		.bss
+ 282              		.align	3
+ 283              		.set	.LANCHOR0,. + 0
+ 286              	_ZN12SchedulerABI9headreadyE:
+ 287 0000 00000000 		.zero	8
+ 287      00000000 
+ 290              	_ZN12SchedulerABI9tailreadyE:
+ 291 0008 00000000 		.zero	8
+ 291      00000000 
+ 294              	_ZN12SchedulerABI9headsleepE:
+ 295 0010 00000000 		.zero	8
+ 295      00000000 
+ 298              	_ZGVZN12SchedulerABI20getInstanceSchedulerEvE8instance:
+ 299 0018 00000000 		.zero	8
+ 299      00000000 
+ 302              	_ZZN12SchedulerABI20getInstanceSchedulerEvE8instance:
+ 303 0020 00       		.zero	1
+ 304              		.text
+ 305              	.Letext0:
+ 306              		.file 2 "src/../h/../lib/hw.h"
+ 307              		.file 3 "src/../h/SchedulerABI.hpp"
+ 308              		.file 4 "src/../h/ThreadABI.hpp"
+GAS LISTING /tmp/ccUCloaK.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 SchedulerABI.cpp
+     /tmp/ccUCloaK.s:9      .text:0000000000000000 _ZN12SchedulerABI3getEv
+     /tmp/ccUCloaK.s:13     .text:0000000000000000 .L0 
+     /tmp/ccUCloaK.s:15     .text:0000000000000000 .L0 
+     /tmp/ccUCloaK.s:16     .text:0000000000000004 .L0 
+     /tmp/ccUCloaK.s:18     .text:0000000000000008 .L0 
+     /tmp/ccUCloaK.s:20     .text:000000000000000c .L0 
+     /tmp/ccUCloaK.s:22     .text:000000000000000c .L0 
+     /tmp/ccUCloaK.s:23     .text:000000000000000c .L0 
+     /tmp/ccUCloaK.s:26     .text:0000000000000014 .L0 
+     /tmp/ccUCloaK.s:29     .text:0000000000000018 .L0 
+     /tmp/ccUCloaK.s:30     .text:0000000000000018 .L0 
+     /tmp/ccUCloaK.s:32     .text:0000000000000020 .L0 
+     /tmp/ccUCloaK.s:36     .text:0000000000000024 .L0 
+     /tmp/ccUCloaK.s:37     .text:0000000000000024 .L0 
+     /tmp/ccUCloaK.s:38     .text:0000000000000024 .L0 
+     /tmp/ccUCloaK.s:40     .text:0000000000000028 .L0 
+     /tmp/ccUCloaK.s:42     .text:0000000000000030 .L0 
+     /tmp/ccUCloaK.s:43     .text:0000000000000030 .L0 
+     /tmp/ccUCloaK.s:47     .text:0000000000000034 .L0 
+     /tmp/ccUCloaK.s:48     .text:0000000000000034 .L0 
+     /tmp/ccUCloaK.s:49     .text:0000000000000038 .L0 
+     /tmp/ccUCloaK.s:50     .text:0000000000000038 .L0 
+     /tmp/ccUCloaK.s:51     .text:0000000000000038 .L0 
+     /tmp/ccUCloaK.s:53     .text:000000000000003c .L0 
+     /tmp/ccUCloaK.s:56     .text:0000000000000040 .L0 
+     /tmp/ccUCloaK.s:58     .text:0000000000000040 .L0 
+     /tmp/ccUCloaK.s:59     .text:0000000000000040 .L0 
+     /tmp/ccUCloaK.s:67     .text:0000000000000050 .L0 
+     /tmp/ccUCloaK.s:68     .text:0000000000000050 .L0 
+     /tmp/ccUCloaK.s:69     .text:0000000000000050 .L0 
+     /tmp/ccUCloaK.s:72     .text:000000000000005c .L0 
+     /tmp/ccUCloaK.s:73     .text:000000000000005c .L0 
+     /tmp/ccUCloaK.s:75     .text:0000000000000060 .L0 
+     /tmp/ccUCloaK.s:76     .text:0000000000000060 .L0 
+     /tmp/ccUCloaK.s:79     .text:0000000000000064 .L0 
+     /tmp/ccUCloaK.s:85     .text:0000000000000064 _ZN12SchedulerABI3putEP9ThreadABI
+     /tmp/ccUCloaK.s:88     .text:0000000000000064 .L0 
+     /tmp/ccUCloaK.s:90     .text:0000000000000064 .L0 
+     /tmp/ccUCloaK.s:91     .text:0000000000000068 .L0 
+     /tmp/ccUCloaK.s:93     .text:000000000000006c .L0 
+     /tmp/ccUCloaK.s:95     .text:0000000000000070 .L0 
+     /tmp/ccUCloaK.s:97     .text:0000000000000070 .L0 
+     /tmp/ccUCloaK.s:98     .text:0000000000000070 .L0 
+     /tmp/ccUCloaK.s:101    .text:0000000000000078 .L0 
+     /tmp/ccUCloaK.s:102    .text:0000000000000078 .L0 
+     /tmp/ccUCloaK.s:105    .text:0000000000000084 .L0 
+     /tmp/ccUCloaK.s:107    .text:0000000000000088 .L0 
+     /tmp/ccUCloaK.s:109    .text:000000000000008c .L0 
+     /tmp/ccUCloaK.s:110    .text:000000000000008c .L0 
+     /tmp/ccUCloaK.s:112    .text:0000000000000094 .L0 
+     /tmp/ccUCloaK.s:114    .text:0000000000000098 .L0 
+     /tmp/ccUCloaK.s:115    .text:0000000000000098 .L0 
+     /tmp/ccUCloaK.s:118    .text:00000000000000a4 .L0 
+     /tmp/ccUCloaK.s:120    .text:00000000000000a8 .L0 
+     /tmp/ccUCloaK.s:121    .text:00000000000000a8 .L0 
+GAS LISTING /tmp/ccUCloaK.s 			page 10
+
+
+     /tmp/ccUCloaK.s:124    .text:00000000000000b0 .L0 
+     /tmp/ccUCloaK.s:126    .text:00000000000000b4 .L0 
+     /tmp/ccUCloaK.s:127    .text:00000000000000b4 .L0 
+     /tmp/ccUCloaK.s:130    .text:00000000000000b8 .L0 
+     /tmp/ccUCloaK.s:131    .text:00000000000000bc .L0 
+     /tmp/ccUCloaK.s:132    .text:00000000000000bc .L0 
+     /tmp/ccUCloaK.s:133    .text:00000000000000bc .L0 
+     /tmp/ccUCloaK.s:135    .text:00000000000000c0 .L0 
+     /tmp/ccUCloaK.s:138    .text:00000000000000c4 .L0 
+     /tmp/ccUCloaK.s:140    .text:00000000000000c4 .L0 
+     /tmp/ccUCloaK.s:141    .text:00000000000000c4 .L0 
+     /tmp/ccUCloaK.s:144    .text:00000000000000d0 .L0 
+     /tmp/ccUCloaK.s:145    .text:00000000000000d0 .L0 
+     /tmp/ccUCloaK.s:147    .text:00000000000000d4 .L0 
+     /tmp/ccUCloaK.s:148    .text:00000000000000d4 .L0 
+     /tmp/ccUCloaK.s:150    .text:00000000000000d8 .L0 
+     /tmp/ccUCloaK.s:151    .text:00000000000000dc .L0 
+     /tmp/ccUCloaK.s:157    .text:00000000000000dc _ZN12SchedulerABI5sleepEm
+     /tmp/ccUCloaK.s:160    .text:00000000000000dc .L0 
+     /tmp/ccUCloaK.s:162    .text:00000000000000dc .L0 
+     /tmp/ccUCloaK.s:163    .text:00000000000000e0 .L0 
+     /tmp/ccUCloaK.s:166    .text:00000000000000e8 .L0 
+     /tmp/ccUCloaK.s:167    .text:00000000000000e8 .L0 
+     /tmp/ccUCloaK.s:169    .text:00000000000000ec .L0 
+     /tmp/ccUCloaK.s:171    .text:00000000000000ec .L0 
+     /tmp/ccUCloaK.s:172    .text:00000000000000ec .L0 
+     /tmp/ccUCloaK.s:176    .text:00000000000000f8 .L0 
+     /tmp/ccUCloaK.s:177    .text:00000000000000f8 .L0 
+     /tmp/ccUCloaK.s:180    .text:0000000000000100 .L0 
+     /tmp/ccUCloaK.s:181    .text:0000000000000100 .L0 
+     /tmp/ccUCloaK.s:184    .text:0000000000000104 .L0 
+     /tmp/ccUCloaK.s:185    .text:0000000000000104 .L0 
+     /tmp/ccUCloaK.s:187    .text:000000000000010c .L0 
+     /tmp/ccUCloaK.s:189    .text:0000000000000110 .L0 
+     /tmp/ccUCloaK.s:191    .text:0000000000000114 .L0 
+     /tmp/ccUCloaK.s:194    .text:0000000000000118 .L0 
+     /tmp/ccUCloaK.s:195    .text:0000000000000118 .L0 
+     /tmp/ccUCloaK.s:197    .text:000000000000011c .L0 
+     /tmp/ccUCloaK.s:198    .text:000000000000011c .L0 
+     /tmp/ccUCloaK.s:202    .text:0000000000000124 .L0 
+     /tmp/ccUCloaK.s:203    .text:0000000000000124 .L0 
+     /tmp/ccUCloaK.s:206    .text:000000000000012c .L0 
+     /tmp/ccUCloaK.s:207    .text:0000000000000130 .L0 
+     /tmp/ccUCloaK.s:208    .text:0000000000000130 .L0 
+     /tmp/ccUCloaK.s:210    .text:0000000000000134 .L0 
+     /tmp/ccUCloaK.s:211    .text:0000000000000134 .L0 
+     /tmp/ccUCloaK.s:213    .text:0000000000000138 .L0 
+     /tmp/ccUCloaK.s:217    .text:000000000000013c .L0 
+     /tmp/ccUCloaK.s:221    .text:000000000000013c .L0 
+     /tmp/ccUCloaK.s:222    .text:000000000000013c .L0 
+     /tmp/ccUCloaK.s:224    .text:0000000000000140 .L0 
+     /tmp/ccUCloaK.s:227    .text:0000000000000144 .L0 
+     /tmp/ccUCloaK.s:229    .text:0000000000000148 .L0 
+     /tmp/ccUCloaK.s:231    .text:000000000000014c .L0 
+     /tmp/ccUCloaK.s:234    .text:0000000000000150 .L0 
+     /tmp/ccUCloaK.s:235    .text:0000000000000150 .L0 
+     /tmp/ccUCloaK.s:237    .text:0000000000000154 .L0 
+GAS LISTING /tmp/ccUCloaK.s 			page 11
+
+
+     /tmp/ccUCloaK.s:238    .text:0000000000000154 .L0 
+     /tmp/ccUCloaK.s:242    .text:000000000000015c .L0 
+     /tmp/ccUCloaK.s:248    .text:000000000000015c _ZN12SchedulerABI20getInstanceSchedulerEv
+     /tmp/ccUCloaK.s:251    .text:000000000000015c .L0 
+     /tmp/ccUCloaK.s:252    .text:000000000000015c .L0 
+     /tmp/ccUCloaK.s:253    .text:0000000000000160 .L0 
+     /tmp/ccUCloaK.s:255    .text:0000000000000164 .L0 
+     /tmp/ccUCloaK.s:257    .text:0000000000000168 .L0 
+     /tmp/ccUCloaK.s:259    .text:0000000000000168 .L0 
+     /tmp/ccUCloaK.s:260    .text:0000000000000168 .L0 
+     /tmp/ccUCloaK.s:263    .text:0000000000000174 .L0 
+     /tmp/ccUCloaK.s:267    .text:0000000000000180 .L0 
+     /tmp/ccUCloaK.s:268    .text:0000000000000180 .L0 
+     /tmp/ccUCloaK.s:270    .text:000000000000018c .L0 
+     /tmp/ccUCloaK.s:271    .text:000000000000018c .L0 
+     /tmp/ccUCloaK.s:273    .text:0000000000000190 .L0 
+     /tmp/ccUCloaK.s:275    .text:0000000000000194 .L0 
+     /tmp/ccUCloaK.s:290    .bss:0000000000000008 _ZN12SchedulerABI9tailreadyE
+     /tmp/ccUCloaK.s:286    .bss:0000000000000000 _ZN12SchedulerABI9headreadyE
+     /tmp/ccUCloaK.s:294    .bss:0000000000000010 _ZN12SchedulerABI9headsleepE
+     /tmp/ccUCloaK.s:283    .bss:0000000000000000 .LANCHOR0
+     /tmp/ccUCloaK.s:298    .bss:0000000000000018 _ZGVZN12SchedulerABI20getInstanceSchedulerEvE8instance
+     /tmp/ccUCloaK.s:302    .bss:0000000000000020 _ZZN12SchedulerABI20getInstanceSchedulerEvE8instance
+     /tmp/ccUCloaK.s:309    .text:0000000000000194 .L0 
+     /tmp/ccUCloaK.s:23     .text:000000000000000c .L0 
+     /tmp/ccUCloaK.s:30     .text:0000000000000018 .L0 
+     /tmp/ccUCloaK.s:40     .text:0000000000000028 .L0 
+     /tmp/ccUCloaK.s:59     .text:0000000000000040 .L0 
+     /tmp/ccUCloaK.s:69     .text:0000000000000050 .L0 
+     /tmp/ccUCloaK.s:102    .text:0000000000000078 .L0 
+     /tmp/ccUCloaK.s:110    .text:000000000000008c .L0 
+     /tmp/ccUCloaK.s:115    .text:0000000000000098 .L0 
+     /tmp/ccUCloaK.s:141    .text:00000000000000c4 .L0 
+     /tmp/ccUCloaK.s:172    .text:00000000000000ec .L0 
+     /tmp/ccUCloaK.s:185    .text:0000000000000104 .L0 
+     /tmp/ccUCloaK.s:198    .text:000000000000011c .L0 
+     /tmp/ccUCloaK.s:260    .text:0000000000000168 .L0 
+     /tmp/ccUCloaK.s:264    .text:0000000000000178 .L0 
+     /tmp/ccUCloaK.s:268    .text:0000000000000180 .L0 
+     /tmp/ccUCloaK.s:55     .text:0000000000000040 .L6
+     /tmp/ccUCloaK.s:62     .text:0000000000000050 .L7
+     /tmp/ccUCloaK.s:46     .text:0000000000000034 .L1
+     /tmp/ccUCloaK.s:128    .text:00000000000000b8 .L8
+     /tmp/ccUCloaK.s:137    .text:00000000000000c4 .L12
+     /tmp/ccUCloaK.s:192    .text:0000000000000118 .L14
+     /tmp/ccUCloaK.s:216    .text:000000000000013c .L15
+     /tmp/ccUCloaK.s:232    .text:0000000000000150 .L17
+     /tmp/ccUCloaK.s:199    .text:0000000000000124 .L16
+     /tmp/ccUCloaK.s:265    .text:0000000000000180 .L20
+     /tmp/ccUCloaK.s:1232   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/ccUCloaK.s:2474   .debug_str:000000000000069c .LASF101
+     /tmp/ccUCloaK.s:2370   .debug_str:0000000000000333 .LASF102
+     /tmp/ccUCloaK.s:2288   .debug_str:000000000000003c .LASF103
+     /tmp/ccUCloaK.s:5      .text:0000000000000000 .Ltext0
+     /tmp/ccUCloaK.s:305    .text:0000000000000194 .Letext0
+     /tmp/ccUCloaK.s:2278   .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/ccUCloaK.s:2400   .debug_str:0000000000000408 .LASF0
+GAS LISTING /tmp/ccUCloaK.s 			page 12
+
+
+     /tmp/ccUCloaK.s:2416   .debug_str:000000000000047c .LASF1
+     /tmp/ccUCloaK.s:2386   .debug_str:00000000000003b1 .LASF2
+     /tmp/ccUCloaK.s:2360   .debug_str:000000000000030e .LASF4
+     /tmp/ccUCloaK.s:2452   .debug_str:00000000000005b2 .LASF3
+     /tmp/ccUCloaK.s:2302   .debug_str:00000000000000c8 .LASF5
+     /tmp/ccUCloaK.s:2324   .debug_str:00000000000001a9 .LASF6
+     /tmp/ccUCloaK.s:2420   .debug_str:00000000000004ba .LASF7
+     /tmp/ccUCloaK.s:2398   .debug_str:00000000000003f5 .LASF8
+     /tmp/ccUCloaK.s:2486   .debug_str:00000000000007a9 .LASF9
+     /tmp/ccUCloaK.s:2350   .debug_str:00000000000002ae .LASF10
+     /tmp/ccUCloaK.s:2432   .debug_str:00000000000004fe .LASF11
+     /tmp/ccUCloaK.s:2478   .debug_str:0000000000000768 .LASF12
+     /tmp/ccUCloaK.s:2306   .debug_str:00000000000000f1 .LASF13
+     /tmp/ccUCloaK.s:2290   .debug_str:000000000000005b .LASF14
+     /tmp/ccUCloaK.s:2314   .debug_str:0000000000000139 .LASF15
+     /tmp/ccUCloaK.s:2444   .debug_str:0000000000000566 .LASF16
+     /tmp/ccUCloaK.s:2320   .debug_str:0000000000000189 .LASF17
+     /tmp/ccUCloaK.s:2490   .debug_str:00000000000007be .LASF22
+     /tmp/ccUCloaK.s:2396   .debug_str:00000000000003eb .LASF18
+     /tmp/ccUCloaK.s:2322   .debug_str:000000000000019f .LASF19
+     /tmp/ccUCloaK.s:2378   .debug_str:0000000000000383 .LASF20
+     /tmp/ccUCloaK.s:2424   .debug_str:00000000000004d6 .LASF104
+     /tmp/ccUCloaK.s:2318   .debug_str:000000000000015f .LASF105
+     /tmp/ccUCloaK.s:2284   .debug_str:0000000000000012 .LASF106
+     /tmp/ccUCloaK.s:2304   .debug_str:00000000000000cf .LASF107
+     /tmp/ccUCloaK.s:2412   .debug_str:0000000000000470 .LASF21
+     /tmp/ccUCloaK.s:2316   .debug_str:0000000000000145 .LASF23
+     /tmp/ccUCloaK.s:2434   .debug_str:000000000000050d .LASF24
+     /tmp/ccUCloaK.s:2482   .debug_str:0000000000000796 .LASF25
+     /tmp/ccUCloaK.s:2354   .debug_str:00000000000002dc .LASF108
+     /tmp/ccUCloaK.s:2476   .debug_str:0000000000000760 .LASF26
+     /tmp/ccUCloaK.s:2430   .debug_str:00000000000004f8 .LASF27
+     /tmp/ccUCloaK.s:2414   .debug_str:0000000000000476 .LASF28
+     /tmp/ccUCloaK.s:2362   .debug_str:0000000000000315 .LASF29
+     /tmp/ccUCloaK.s:2456   .debug_str:00000000000005d5 .LASF30
+     /tmp/ccUCloaK.s:2294   .debug_str:0000000000000081 .LASF109
+     /tmp/ccUCloaK.s:2492   .debug_str:00000000000007cb .LASF31
+     /tmp/ccUCloaK.s:2358   .debug_str:00000000000002fc .LASF33
+     /tmp/ccUCloaK.s:2348   .debug_str:000000000000029e .LASF32
+     /tmp/ccUCloaK.s:2404   .debug_str:0000000000000434 .LASF34
+     /tmp/ccUCloaK.s:2330   .debug_str:00000000000001ec .LASF35
+     /tmp/ccUCloaK.s:2342   .debug_str:0000000000000254 .LASF36
+     /tmp/ccUCloaK.s:2462   .debug_str:0000000000000604 .LASF37
+     /tmp/ccUCloaK.s:2376   .debug_str:0000000000000370 .LASF38
+     /tmp/ccUCloaK.s:2394   .debug_str:00000000000003e6 .LASF39
+     /tmp/ccUCloaK.s:2426   .debug_str:00000000000004eb .LASF40
+     /tmp/ccUCloaK.s:2286   .debug_str:000000000000002a .LASF48
+     /tmp/ccUCloaK.s:2422   .debug_str:00000000000004cd .LASF41
+     /tmp/ccUCloaK.s:2410   .debug_str:0000000000000457 .LASF43
+     /tmp/ccUCloaK.s:2428   .debug_str:00000000000004f0 .LASF42
+     /tmp/ccUCloaK.s:2392   .debug_str:00000000000003ce .LASF44
+     /tmp/ccUCloaK.s:2506   .debug_str:0000000000000830 .LASF74
+     /tmp/ccUCloaK.s:2328   .debug_str:00000000000001de .LASF45
+     /tmp/ccUCloaK.s:2326   .debug_str:00000000000001b0 .LASF46
+     /tmp/ccUCloaK.s:2408   .debug_str:000000000000044c .LASF47
+     /tmp/ccUCloaK.s:2338   .debug_str:000000000000023d .LASF49
+     /tmp/ccUCloaK.s:2464   .debug_str:0000000000000617 .LASF50
+GAS LISTING /tmp/ccUCloaK.s 			page 13
+
+
+     /tmp/ccUCloaK.s:2504   .debug_str:000000000000081c .LASF51
+     /tmp/ccUCloaK.s:2500   .debug_str:0000000000000803 .LASF52
+     /tmp/ccUCloaK.s:2446   .debug_str:000000000000057c .LASF53
+     /tmp/ccUCloaK.s:2308   .debug_str:0000000000000101 .LASF54
+     /tmp/ccUCloaK.s:2346   .debug_str:0000000000000284 .LASF55
+     /tmp/ccUCloaK.s:2418   .debug_str:000000000000048f .LASF56
+     /tmp/ccUCloaK.s:2296   .debug_str:0000000000000089 .LASF57
+     /tmp/ccUCloaK.s:2438   .debug_str:0000000000000531 .LASF58
+     /tmp/ccUCloaK.s:2298   .debug_str:000000000000009d .LASF59
+     /tmp/ccUCloaK.s:2300   .debug_str:00000000000000aa .LASF60
+     /tmp/ccUCloaK.s:2390   .debug_str:00000000000003c5 .LASF61
+     /tmp/ccUCloaK.s:2374   .debug_str:000000000000034e .LASF62
+     /tmp/ccUCloaK.s:2368   .debug_str:000000000000032a .LASF63
+     /tmp/ccUCloaK.s:2468   .debug_str:000000000000064b .LASF64
+     /tmp/ccUCloaK.s:2380   .debug_str:000000000000038d .LASF65
+     /tmp/ccUCloaK.s:2402   .debug_str:0000000000000415 .LASF66
+     /tmp/ccUCloaK.s:2498   .debug_str:00000000000007fa .LASF67
+     /tmp/ccUCloaK.s:2458   .debug_str:00000000000005de .LASF68
+     /tmp/ccUCloaK.s:2336   .debug_str:0000000000000235 .LASF69
+     /tmp/ccUCloaK.s:2382   .debug_str:000000000000039a .LASF70
+     /tmp/ccUCloaK.s:2466   .debug_str:000000000000062c .LASF71
+     /tmp/ccUCloaK.s:2388   .debug_str:00000000000003bf .LASF72
+     /tmp/ccUCloaK.s:2292   .debug_str:000000000000006b .LASF73
+     /tmp/ccUCloaK.s:2282   .debug_str:0000000000000009 .LASF75
+     /tmp/ccUCloaK.s:2442   .debug_str:000000000000055b .LASF110
+     /tmp/ccUCloaK.s:2450   .debug_str:0000000000000596 .LASF111
+     /tmp/ccUCloaK.s:2310   .debug_str:0000000000000115 .LASF76
+     /tmp/ccUCloaK.s:2372   .debug_str:0000000000000348 .LASF77
+     /tmp/ccUCloaK.s:2440   .debug_str:0000000000000556 .LASF112
+     /tmp/ccUCloaK.s:2364   .debug_str:000000000000031d .LASF78
+     /tmp/ccUCloaK.s:2406   .debug_str:0000000000000446 .LASF79
+     /tmp/ccUCloaK.s:2366   .debug_str:0000000000000322 .LASF80
+     /tmp/ccUCloaK.s:2436   .debug_str:0000000000000523 .LASF113
+     /tmp/ccUCloaK.s:2332   .debug_str:00000000000001fc .LASF114
+     /tmp/ccUCloaK.s:2312   .debug_str:000000000000012f .LASF81
+     /tmp/ccUCloaK.s:2460   .debug_str:00000000000005f7 .LASF82
+     /tmp/ccUCloaK.s:2480   .debug_str:0000000000000777 .LASF83
+     /tmp/ccUCloaK.s:2502   .debug_str:000000000000080d .LASF84
+     /tmp/ccUCloaK.s:2352   .debug_str:00000000000002bc .LASF85
+     /tmp/ccUCloaK.s:2454   .debug_str:00000000000005c4 .LASF86
+     /tmp/ccUCloaK.s:2334   .debug_str:000000000000022a .LASF87
+     /tmp/ccUCloaK.s:2472   .debug_str:000000000000067f .LASF88
+     /tmp/ccUCloaK.s:2484   .debug_str:00000000000007a0 .LASF89
+     /tmp/ccUCloaK.s:2356   .debug_str:00000000000002e2 .LASF90
+     /tmp/ccUCloaK.s:2280   .debug_str:0000000000000000 .LASF91
+     /tmp/ccUCloaK.s:2470   .debug_str:0000000000000665 .LASF92
+     /tmp/ccUCloaK.s:2340   .debug_str:000000000000024f .LASF93
+     /tmp/ccUCloaK.s:2508   .debug_str:0000000000000835 .LASF94
+     /tmp/ccUCloaK.s:2494   .debug_str:00000000000007d8 .LASF95
+     /tmp/ccUCloaK.s:2344   .debug_str:0000000000000267 .LASF96
+     /tmp/ccUCloaK.s:249    .text:000000000000015c .LFB16
+     /tmp/ccUCloaK.s:276    .text:0000000000000194 .LFE16
+     /tmp/ccUCloaK.s:2384   .debug_str:00000000000003a8 .LASF97
+     /tmp/ccUCloaK.s:158    .text:00000000000000dc .LFB15
+     /tmp/ccUCloaK.s:243    .text:000000000000015c .LFE15
+     /tmp/ccUCloaK.s:2488   .debug_str:00000000000007b9 .LASF99
+     /tmp/ccUCloaK.s:2204   .debug_loc:0000000000000000 .LLST2
+GAS LISTING /tmp/ccUCloaK.s 			page 14
+
+
+     /tmp/ccUCloaK.s:2448   .debug_str:0000000000000591 .LASF98
+     /tmp/ccUCloaK.s:2222   .debug_loc:000000000000004c .LLST3
+     /tmp/ccUCloaK.s:219    .text:000000000000013c .LBB6
+     /tmp/ccUCloaK.s:240    .text:000000000000015c .LBE6
+     /tmp/ccUCloaK.s:2233   .debug_loc:0000000000000082 .LLST4
+     /tmp/ccUCloaK.s:204    .text:000000000000012c .LVL8
+     /tmp/ccUCloaK.s:86     .text:0000000000000064 .LFB14
+     /tmp/ccUCloaK.s:152    .text:00000000000000dc .LFE14
+     /tmp/ccUCloaK.s:2496   .debug_str:00000000000007f5 .LASF100
+     /tmp/ccUCloaK.s:10     .text:0000000000000000 .LFB13
+     /tmp/ccUCloaK.s:80     .text:0000000000000064 .LFE13
+     /tmp/ccUCloaK.s:2244   .debug_loc:00000000000000b8 .LLST0
+     /tmp/ccUCloaK.s:2258   .debug_loc:00000000000000f1 .LLST1
+     /tmp/ccUCloaK.s:64     .text:0000000000000050 .LBB3
+     /tmp/ccUCloaK.s:77     .text:0000000000000064 .LBE3
+     /tmp/ccUCloaK.s:161    .text:00000000000000dc .LVL6
+     /tmp/ccUCloaK.s:215    .text:000000000000013c .LVL9
+     /tmp/ccUCloaK.s:174    .text:00000000000000f8 .LVL7
+     /tmp/ccUCloaK.s:225    .text:0000000000000144 .LVL10
+     /tmp/ccUCloaK.s:14     .text:0000000000000000 .LVL0
+     /tmp/ccUCloaK.s:24     .text:0000000000000014 .LVL1
+     /tmp/ccUCloaK.s:35     .text:0000000000000024 .LVL2
+     /tmp/ccUCloaK.s:45     .text:0000000000000034 .LVL3
+     /tmp/ccUCloaK.s:310    .debug_info:0000000000000000 .Ldebug_info0
+
+UNDEFINED SYMBOLS
+_ZN9ThreadABI4idleE
+_ZN9ThreadABI7runningE
+_ZN9ThreadABI5yieldEv

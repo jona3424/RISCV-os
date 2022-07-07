@@ -1,0 +1,669 @@
+GAS LISTING /tmp/cc0KYQRY.s 			page 1
+
+
+   1              		.file	"BufferPrinting.cpp"
+   2              		.option pic
+   3              		.option norelax
+   4              		.text
+   5              	.Ltext0:
+   6              		.align	2
+   7              		.globl	_ZN14BufferPrinting3getEv
+   9              	_ZN14BufferPrinting3getEv:
+  10              	.LFB28:
+  11              		.file 1 "src/BufferPrinting.cpp"
+   1:src/BufferPrinting.cpp **** //
+   2:src/BufferPrinting.cpp **** // Created by os on 6/2/22.
+   3:src/BufferPrinting.cpp **** //
+   4:src/BufferPrinting.cpp **** #include "../h/BufferPrinting.hpp"
+   5:src/BufferPrinting.cpp **** BufferPrinting *BufferPrinting::bout= nullptr;
+   6:src/BufferPrinting.cpp **** BufferPrinting *BufferPrinting::bin= nullptr;
+   7:src/BufferPrinting.cpp **** sem_t BufferPrinting::in= nullptr;
+   8:src/BufferPrinting.cpp **** sem_t BufferPrinting::out= nullptr;
+   9:src/BufferPrinting.cpp **** int BufferPrinting::tmpput=0;
+  10:src/BufferPrinting.cpp **** int BufferPrinting::tmpget=0;
+  11:src/BufferPrinting.cpp **** 
+  12:src/BufferPrinting.cpp **** char BufferPrinting::get() {
+  12              		.loc 1 12 28
+  13              		.cfi_startproc
+  14              	.LVL0:
+  15 0000 130101FE 		addi	sp,sp,-32
+  16              		.cfi_def_cfa_offset 32
+  17 0004 233C1100 		sd	ra,24(sp)
+  18 0008 23388100 		sd	s0,16(sp)
+  19 000c 23349100 		sd	s1,8(sp)
+  20 0010 23302101 		sd	s2,0(sp)
+  21              		.cfi_offset 1, -8
+  22              		.cfi_offset 8, -16
+  23              		.cfi_offset 9, -24
+  24              		.cfi_offset 18, -32
+  25 0014 13040102 		addi	s0,sp,32
+  26              		.cfi_def_cfa 8, 0
+  27 0018 93040500 		mv	s1,a0
+  13:src/BufferPrinting.cpp ****     SemaphoreABI::semwaitABI(itemAvailable);
+  28              		.loc 1 13 5
+  29              		.loc 1 13 29 is_stmt 0
+  30 001c 03350500 		ld	a0,0(a0)
+  31              	.LVL1:
+  32 0020 97000000 		call	_ZN12SemaphoreABI10semwaitABIEPS_@plt
+  32      E7800000 
+  33              	.LVL2:
+  14:src/BufferPrinting.cpp **** 
+  15:src/BufferPrinting.cpp ****     char ret = buffer[head];
+  34              		.loc 1 15 5 is_stmt 1
+  35              		.loc 1 15 16 is_stmt 0
+  36 0028 03B70401 		ld	a4,16(s1)
+  37              		.loc 1 15 23
+  38 002c 83A78401 		lw	a5,24(s1)
+  39              		.loc 1 15 27
+  40 0030 3307F700 		add	a4,a4,a5
+  41              		.loc 1 15 10
+  42 0034 03490700 		lbu	s2,0(a4)
+GAS LISTING /tmp/cc0KYQRY.s 			page 2
+
+
+  43              	.LVL3:
+  16:src/BufferPrinting.cpp ****     head = (head + 1) % cap;
+  44              		.loc 1 16 5 is_stmt 1
+  45              		.loc 1 16 18 is_stmt 0
+  46 0038 9B871700 		addiw	a5,a5,1
+  47              		.loc 1 16 25
+  48 003c 03A70402 		lw	a4,32(s1)
+  49              		.loc 1 16 23
+  50 0040 BBE7E702 		remw	a5,a5,a4
+  51              		.loc 1 16 10
+  52 0044 23ACF400 		sw	a5,24(s1)
+  17:src/BufferPrinting.cpp **** 
+  18:src/BufferPrinting.cpp ****     SemaphoreABI::semsignalABI(spaceAvailable);
+  53              		.loc 1 18 5 is_stmt 1
+  54              		.loc 1 18 31 is_stmt 0
+  55 0048 03B58400 		ld	a0,8(s1)
+  56 004c 97000000 		call	_ZN12SemaphoreABI12semsignalABIEPS_@plt
+  56      E7800000 
+  57              	.LVL4:
+  19:src/BufferPrinting.cpp **** 
+  20:src/BufferPrinting.cpp ****     return ret;
+  58              		.loc 1 20 5 is_stmt 1
+  21:src/BufferPrinting.cpp **** }
+  59              		.loc 1 21 1 is_stmt 0
+  60 0054 13050900 		mv	a0,s2
+  61 0058 83308101 		ld	ra,24(sp)
+  62              		.cfi_restore 1
+  63 005c 03340101 		ld	s0,16(sp)
+  64              		.cfi_restore 8
+  65              		.cfi_def_cfa 2, 32
+  66 0060 83348100 		ld	s1,8(sp)
+  67              		.cfi_restore 9
+  68              	.LVL5:
+  69 0064 03390100 		ld	s2,0(sp)
+  70              		.cfi_restore 18
+  71              	.LVL6:
+  72 0068 13010102 		addi	sp,sp,32
+  73              		.cfi_def_cfa_offset 0
+  74 006c 67800000 		jr	ra
+  75              		.cfi_endproc
+  76              	.LFE28:
+  78              		.align	2
+  79              		.globl	_ZN14BufferPrinting3putEc
+  81              	_ZN14BufferPrinting3putEc:
+  82              	.LFB29:
+  22:src/BufferPrinting.cpp **** 
+  23:src/BufferPrinting.cpp **** void BufferPrinting::put(char val) {
+  83              		.loc 1 23 36 is_stmt 1
+  84              		.cfi_startproc
+  85              	.LVL7:
+  86 0070 130101FE 		addi	sp,sp,-32
+  87              		.cfi_def_cfa_offset 32
+  88 0074 233C1100 		sd	ra,24(sp)
+  89 0078 23388100 		sd	s0,16(sp)
+  90 007c 23349100 		sd	s1,8(sp)
+  91 0080 23302101 		sd	s2,0(sp)
+  92              		.cfi_offset 1, -8
+GAS LISTING /tmp/cc0KYQRY.s 			page 3
+
+
+  93              		.cfi_offset 8, -16
+  94              		.cfi_offset 9, -24
+  95              		.cfi_offset 18, -32
+  96 0084 13040102 		addi	s0,sp,32
+  97              		.cfi_def_cfa 8, 0
+  98 0088 93040500 		mv	s1,a0
+  99 008c 13890500 		mv	s2,a1
+  24:src/BufferPrinting.cpp ****     SemaphoreABI::semwaitABI(spaceAvailable);
+ 100              		.loc 1 24 5
+ 101              		.loc 1 24 29 is_stmt 0
+ 102 0090 03358500 		ld	a0,8(a0)
+ 103              	.LVL8:
+ 104 0094 97000000 		call	_ZN12SemaphoreABI10semwaitABIEPS_@plt
+ 104      E7800000 
+ 105              	.LVL9:
+  25:src/BufferPrinting.cpp **** 
+  26:src/BufferPrinting.cpp ****     buffer[tail] = val;
+ 106              		.loc 1 26 5 is_stmt 1
+ 107 009c 83B70401 		ld	a5,16(s1)
+ 108              		.loc 1 26 12 is_stmt 0
+ 109 00a0 03A7C401 		lw	a4,28(s1)
+ 110              		.loc 1 26 16
+ 111 00a4 B387E700 		add	a5,a5,a4
+ 112              		.loc 1 26 18
+ 113 00a8 23802701 		sb	s2,0(a5)
+  27:src/BufferPrinting.cpp ****     tail = (tail + 1) % cap;
+ 114              		.loc 1 27 5 is_stmt 1
+ 115              		.loc 1 27 13 is_stmt 0
+ 116 00ac 83A7C401 		lw	a5,28(s1)
+ 117              		.loc 1 27 18
+ 118 00b0 9B871700 		addiw	a5,a5,1
+ 119              		.loc 1 27 25
+ 120 00b4 03A70402 		lw	a4,32(s1)
+ 121              		.loc 1 27 23
+ 122 00b8 BBE7E702 		remw	a5,a5,a4
+ 123              		.loc 1 27 10
+ 124 00bc 23AEF400 		sw	a5,28(s1)
+  28:src/BufferPrinting.cpp **** 
+  29:src/BufferPrinting.cpp ****     SemaphoreABI::semsignalABI(itemAvailable);
+ 125              		.loc 1 29 5 is_stmt 1
+ 126              		.loc 1 29 31 is_stmt 0
+ 127 00c0 03B50400 		ld	a0,0(s1)
+ 128 00c4 97000000 		call	_ZN12SemaphoreABI12semsignalABIEPS_@plt
+ 128      E7800000 
+ 129              	.LVL10:
+  30:src/BufferPrinting.cpp **** }
+ 130              		.loc 1 30 1
+ 131 00cc 83308101 		ld	ra,24(sp)
+ 132              		.cfi_restore 1
+ 133 00d0 03340101 		ld	s0,16(sp)
+ 134              		.cfi_restore 8
+ 135              		.cfi_def_cfa 2, 32
+ 136 00d4 83348100 		ld	s1,8(sp)
+ 137              		.cfi_restore 9
+ 138              	.LVL11:
+ 139 00d8 03390100 		ld	s2,0(sp)
+ 140              		.cfi_restore 18
+GAS LISTING /tmp/cc0KYQRY.s 			page 4
+
+
+ 141 00dc 13010102 		addi	sp,sp,32
+ 142              		.cfi_def_cfa_offset 0
+ 143 00e0 67800000 		jr	ra
+ 144              		.cfi_endproc
+ 145              	.LFE29:
+ 147              		.align	2
+ 148              		.globl	_ZN14BufferPrintingD2Ev
+ 150              	_ZN14BufferPrintingD2Ev:
+ 151              	.LFB31:
+  31:src/BufferPrinting.cpp **** 
+  32:src/BufferPrinting.cpp **** BufferPrinting::~BufferPrinting() {
+ 152              		.loc 1 32 1 is_stmt 1
+ 153              		.cfi_startproc
+ 154              		.cfi_personality 0x9b,DW.ref.__gxx_personality_v0
+ 155              		.cfi_lsda 0x1b,.LLSDA31
+ 156              	.LVL12:
+ 157 00e4 130101FE 		addi	sp,sp,-32
+ 158              		.cfi_def_cfa_offset 32
+ 159 00e8 233C1100 		sd	ra,24(sp)
+ 160 00ec 23388100 		sd	s0,16(sp)
+ 161 00f0 23349100 		sd	s1,8(sp)
+ 162              		.cfi_offset 1, -8
+ 163              		.cfi_offset 8, -16
+ 164              		.cfi_offset 9, -24
+ 165 00f4 13040102 		addi	s0,sp,32
+ 166              		.cfi_def_cfa 8, 0
+ 167 00f8 93040500 		mv	s1,a0
+ 168              	.LBB2:
+  33:src/BufferPrinting.cpp ****     delete buffer;
+ 169              		.loc 1 33 5
+ 170              		.loc 1 33 12 is_stmt 0
+ 171 00fc 03350501 		ld	a0,16(a0)
+ 172              	.LVL13:
+ 173              		.loc 1 33 18
+ 174 0100 63060500 		beqz	a0,.L6
+ 175              		.loc 1 33 12 discriminator 1
+ 176 0104 97000000 		call	_ZdlPv@plt
+ 176      E7800000 
+ 177              	.LVL14:
+ 178              	.L6:
+  34:src/BufferPrinting.cpp ****     SemaphoreABI::semcloseABI(itemAvailable);
+ 179              		.loc 1 34 5 is_stmt 1
+ 180              		.loc 1 34 30 is_stmt 0
+ 181 010c 03B50400 		ld	a0,0(s1)
+ 182 0110 97000000 		call	_ZN12SemaphoreABI11semcloseABIEPS_@plt
+ 182      E7800000 
+ 183              	.LVL15:
+  35:src/BufferPrinting.cpp ****     SemaphoreABI::semcloseABI(spaceAvailable);
+ 184              		.loc 1 35 5 is_stmt 1
+ 185              		.loc 1 35 30 is_stmt 0
+ 186 0118 03B58400 		ld	a0,8(s1)
+ 187 011c 97000000 		call	_ZN12SemaphoreABI11semcloseABIEPS_@plt
+ 187      E7800000 
+ 188              	.LVL16:
+ 189              	.LBE2:
+  36:src/BufferPrinting.cpp ****   }
+ 190              		.loc 1 36 3
+GAS LISTING /tmp/cc0KYQRY.s 			page 5
+
+
+ 191 0124 83308101 		ld	ra,24(sp)
+ 192              		.cfi_restore 1
+ 193 0128 03340101 		ld	s0,16(sp)
+ 194              		.cfi_restore 8
+ 195              		.cfi_def_cfa 2, 32
+ 196 012c 83348100 		ld	s1,8(sp)
+ 197              		.cfi_restore 9
+ 198              	.LVL17:
+ 199 0130 13010102 		addi	sp,sp,32
+ 200              		.cfi_def_cfa_offset 0
+ 201 0134 67800000 		jr	ra
+ 202              		.cfi_endproc
+ 203              	.LFE31:
+ 204              		.globl	__gxx_personality_v0
+ 205              		.section	.gcc_except_table,"a",@progbits
+ 206              	.LLSDA31:
+ 207 0000 FF       		.byte	0xff
+ 208 0001 FF       		.byte	0xff
+ 209 0002 03       		.byte	0x3
+ 210 0003 00       		.byte	0
+ 211              		.text
+ 213              		.globl	_ZN14BufferPrintingD1Ev
+ 214              		.set	_ZN14BufferPrintingD1Ev,_ZN14BufferPrintingD2Ev
+ 215              		.align	2
+ 216              		.globl	_ZN14BufferPrintingC2Ei
+ 218              	_ZN14BufferPrintingC2Ei:
+ 219              	.LFB34:
+  37:src/BufferPrinting.cpp **** 
+  38:src/BufferPrinting.cpp **** BufferPrinting::BufferPrinting(int cap) {
+ 220              		.loc 1 38 1 is_stmt 1
+ 221              		.cfi_startproc
+ 222              	.LVL18:
+ 223 0138 130101FE 		addi	sp,sp,-32
+ 224              		.cfi_def_cfa_offset 32
+ 225 013c 233C1100 		sd	ra,24(sp)
+ 226 0140 23388100 		sd	s0,16(sp)
+ 227 0144 23349100 		sd	s1,8(sp)
+ 228 0148 23302101 		sd	s2,0(sp)
+ 229              		.cfi_offset 1, -8
+ 230              		.cfi_offset 8, -16
+ 231              		.cfi_offset 9, -24
+ 232              		.cfi_offset 18, -32
+ 233 014c 13040102 		addi	s0,sp,32
+ 234              		.cfi_def_cfa 8, 0
+ 235 0150 93040500 		mv	s1,a0
+ 236 0154 13890500 		mv	s2,a1
+ 237              	.LBB3:
+  39:src/BufferPrinting.cpp ****     this->cap=cap;
+ 238              		.loc 1 39 5
+ 239              		.loc 1 39 14 is_stmt 0
+ 240 0158 2320B502 		sw	a1,32(a0)
+  40:src/BufferPrinting.cpp ****     buffer = new char[cap];
+ 241              		.loc 1 40 5 is_stmt 1
+ 242              		.loc 1 40 26 is_stmt 0
+ 243 015c 13850500 		mv	a0,a1
+ 244              	.LVL19:
+ 245 0160 97000000 		call	_Znam@plt
+GAS LISTING /tmp/cc0KYQRY.s 			page 6
+
+
+ 245      E7800000 
+ 246              	.LVL20:
+ 247              		.loc 1 40 12
+ 248 0168 23B8A400 		sd	a0,16(s1)
+  41:src/BufferPrinting.cpp ****     SemaphoreABI::semopenABI(&itemAvailable, 0);
+ 249              		.loc 1 41 5 is_stmt 1
+ 250              		.loc 1 41 29 is_stmt 0
+ 251 016c 93050000 		li	a1,0
+ 252 0170 13850400 		mv	a0,s1
+ 253 0174 97000000 		call	_ZN12SemaphoreABI10semopenABIEPPS_i@plt
+ 253      E7800000 
+ 254              	.LVL21:
+  42:src/BufferPrinting.cpp ****     SemaphoreABI::semopenABI(&spaceAvailable, cap);
+ 255              		.loc 1 42 5 is_stmt 1
+ 256              		.loc 1 42 29 is_stmt 0
+ 257 017c 93050900 		mv	a1,s2
+ 258 0180 13858400 		addi	a0,s1,8
+ 259 0184 97000000 		call	_ZN12SemaphoreABI10semopenABIEPPS_i@plt
+ 259      E7800000 
+ 260              	.LVL22:
+  43:src/BufferPrinting.cpp ****     head=tail=0;
+ 261              		.loc 1 43 5 is_stmt 1
+ 262              		.loc 1 43 14 is_stmt 0
+ 263 018c 23AE0400 		sw	zero,28(s1)
+ 264              		.loc 1 43 9
+ 265 0190 23AC0400 		sw	zero,24(s1)
+ 266              	.LBE3:
+  44:src/BufferPrinting.cpp **** }
+ 267              		.loc 1 44 1
+ 268 0194 83308101 		ld	ra,24(sp)
+ 269              		.cfi_restore 1
+ 270 0198 03340101 		ld	s0,16(sp)
+ 271              		.cfi_restore 8
+ 272              		.cfi_def_cfa 2, 32
+ 273 019c 83348100 		ld	s1,8(sp)
+ 274              		.cfi_restore 9
+ 275              	.LVL23:
+ 276 01a0 03390100 		ld	s2,0(sp)
+ 277              		.cfi_restore 18
+ 278 01a4 13010102 		addi	sp,sp,32
+ 279              		.cfi_def_cfa_offset 0
+ 280 01a8 67800000 		jr	ra
+ 281              		.cfi_endproc
+ 282              	.LFE34:
+ 284              		.globl	_ZN14BufferPrintingC1Ei
+ 285              		.set	_ZN14BufferPrintingC1Ei,_ZN14BufferPrintingC2Ei
+ 286              		.globl	_ZN14BufferPrinting6tmpgetE
+ 287              		.globl	_ZN14BufferPrinting6tmpputE
+ 288              		.globl	_ZN14BufferPrinting3outE
+ 289              		.globl	_ZN14BufferPrinting2inE
+ 290              		.globl	_ZN14BufferPrinting3binE
+ 291              		.globl	_ZN14BufferPrinting4boutE
+ 292              		.bss
+ 293              		.align	3
+ 296              	_ZN14BufferPrinting6tmpgetE:
+ 297 0000 00000000 		.zero	4
+ 300              	_ZN14BufferPrinting6tmpputE:
+GAS LISTING /tmp/cc0KYQRY.s 			page 7
+
+
+ 301 0004 00000000 		.zero	4
+ 304              	_ZN14BufferPrinting3outE:
+ 305 0008 00000000 		.zero	8
+ 305      00000000 
+ 308              	_ZN14BufferPrinting2inE:
+ 309 0010 00000000 		.zero	8
+ 309      00000000 
+ 312              	_ZN14BufferPrinting3binE:
+ 313 0018 00000000 		.zero	8
+ 313      00000000 
+ 316              	_ZN14BufferPrinting4boutE:
+ 317 0020 00000000 		.zero	8
+ 317      00000000 
+ 318              		.text
+ 319              	.Letext0:
+ 320              		.file 2 "src/../h/../lib/hw.h"
+ 321              		.file 3 "src/../h/SemaphoreABI.hpp"
+ 322              		.file 4 "src/../h/BufferPrinting.hpp"
+ 2222              		.align	3
+ 2225              	DW.ref.__gxx_personality_v0:
+ 2226 0000 00000000 		.dword	__gxx_personality_v0
+ 2226      00000000 
+ 2227              		.ident	"GCC: (Ubuntu 9.4.0-1ubuntu1~20.04) 9.4.0"
+ 2228              		.section	.note.GNU-stack,"",@progbits
+GAS LISTING /tmp/cc0KYQRY.s 			page 8
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 BufferPrinting.cpp
+     /tmp/cc0KYQRY.s:9      .text:0000000000000000 _ZN14BufferPrinting3getEv
+     /tmp/cc0KYQRY.s:13     .text:0000000000000000 .L0 
+     /tmp/cc0KYQRY.s:15     .text:0000000000000000 .L0 
+     /tmp/cc0KYQRY.s:16     .text:0000000000000004 .L0 
+     /tmp/cc0KYQRY.s:21     .text:0000000000000014 .L0 
+     /tmp/cc0KYQRY.s:22     .text:0000000000000014 .L0 
+     /tmp/cc0KYQRY.s:23     .text:0000000000000014 .L0 
+     /tmp/cc0KYQRY.s:24     .text:0000000000000014 .L0 
+     /tmp/cc0KYQRY.s:26     .text:0000000000000018 .L0 
+     /tmp/cc0KYQRY.s:29     .text:000000000000001c .L0 
+     /tmp/cc0KYQRY.s:30     .text:000000000000001c .L0 
+     /tmp/cc0KYQRY.s:35     .text:0000000000000028 .L0 
+     /tmp/cc0KYQRY.s:36     .text:0000000000000028 .L0 
+     /tmp/cc0KYQRY.s:38     .text:000000000000002c .L0 
+     /tmp/cc0KYQRY.s:40     .text:0000000000000030 .L0 
+     /tmp/cc0KYQRY.s:42     .text:0000000000000034 .L0 
+     /tmp/cc0KYQRY.s:45     .text:0000000000000038 .L0 
+     /tmp/cc0KYQRY.s:46     .text:0000000000000038 .L0 
+     /tmp/cc0KYQRY.s:48     .text:000000000000003c .L0 
+     /tmp/cc0KYQRY.s:50     .text:0000000000000040 .L0 
+     /tmp/cc0KYQRY.s:52     .text:0000000000000044 .L0 
+     /tmp/cc0KYQRY.s:54     .text:0000000000000048 .L0 
+     /tmp/cc0KYQRY.s:55     .text:0000000000000048 .L0 
+     /tmp/cc0KYQRY.s:59     .text:0000000000000054 .L0 
+     /tmp/cc0KYQRY.s:60     .text:0000000000000054 .L0 
+     /tmp/cc0KYQRY.s:62     .text:000000000000005c .L0 
+     /tmp/cc0KYQRY.s:64     .text:0000000000000060 .L0 
+     /tmp/cc0KYQRY.s:65     .text:0000000000000060 .L0 
+     /tmp/cc0KYQRY.s:67     .text:0000000000000064 .L0 
+     /tmp/cc0KYQRY.s:70     .text:0000000000000068 .L0 
+     /tmp/cc0KYQRY.s:73     .text:000000000000006c .L0 
+     /tmp/cc0KYQRY.s:75     .text:0000000000000070 .L0 
+     /tmp/cc0KYQRY.s:81     .text:0000000000000070 _ZN14BufferPrinting3putEc
+     /tmp/cc0KYQRY.s:84     .text:0000000000000070 .L0 
+     /tmp/cc0KYQRY.s:86     .text:0000000000000070 .L0 
+     /tmp/cc0KYQRY.s:87     .text:0000000000000074 .L0 
+     /tmp/cc0KYQRY.s:92     .text:0000000000000084 .L0 
+     /tmp/cc0KYQRY.s:93     .text:0000000000000084 .L0 
+     /tmp/cc0KYQRY.s:94     .text:0000000000000084 .L0 
+     /tmp/cc0KYQRY.s:95     .text:0000000000000084 .L0 
+     /tmp/cc0KYQRY.s:97     .text:0000000000000088 .L0 
+     /tmp/cc0KYQRY.s:101    .text:0000000000000090 .L0 
+     /tmp/cc0KYQRY.s:102    .text:0000000000000090 .L0 
+     /tmp/cc0KYQRY.s:107    .text:000000000000009c .L0 
+     /tmp/cc0KYQRY.s:109    .text:00000000000000a0 .L0 
+     /tmp/cc0KYQRY.s:111    .text:00000000000000a4 .L0 
+     /tmp/cc0KYQRY.s:113    .text:00000000000000a8 .L0 
+     /tmp/cc0KYQRY.s:115    .text:00000000000000ac .L0 
+     /tmp/cc0KYQRY.s:116    .text:00000000000000ac .L0 
+     /tmp/cc0KYQRY.s:118    .text:00000000000000b0 .L0 
+     /tmp/cc0KYQRY.s:120    .text:00000000000000b4 .L0 
+     /tmp/cc0KYQRY.s:122    .text:00000000000000b8 .L0 
+     /tmp/cc0KYQRY.s:124    .text:00000000000000bc .L0 
+     /tmp/cc0KYQRY.s:126    .text:00000000000000c0 .L0 
+     /tmp/cc0KYQRY.s:127    .text:00000000000000c0 .L0 
+GAS LISTING /tmp/cc0KYQRY.s 			page 9
+
+
+     /tmp/cc0KYQRY.s:131    .text:00000000000000cc .L0 
+     /tmp/cc0KYQRY.s:132    .text:00000000000000d0 .L0 
+     /tmp/cc0KYQRY.s:134    .text:00000000000000d4 .L0 
+     /tmp/cc0KYQRY.s:135    .text:00000000000000d4 .L0 
+     /tmp/cc0KYQRY.s:137    .text:00000000000000d8 .L0 
+     /tmp/cc0KYQRY.s:140    .text:00000000000000dc .L0 
+     /tmp/cc0KYQRY.s:142    .text:00000000000000e0 .L0 
+     /tmp/cc0KYQRY.s:144    .text:00000000000000e4 .L0 
+     /tmp/cc0KYQRY.s:150    .text:00000000000000e4 _ZN14BufferPrintingD2Ev
+     /tmp/cc0KYQRY.s:153    .text:00000000000000e4 .L0 
+     /tmp/cc0KYQRY.s:2225   .data.rel.local.DW.ref.__gxx_personality_v0:0000000000000000 DW.ref.__gxx_personality_v0
+     /tmp/cc0KYQRY.s:157    .text:00000000000000e4 .L0 
+     /tmp/cc0KYQRY.s:158    .text:00000000000000e8 .L0 
+     /tmp/cc0KYQRY.s:162    .text:00000000000000f4 .L0 
+     /tmp/cc0KYQRY.s:163    .text:00000000000000f4 .L0 
+     /tmp/cc0KYQRY.s:164    .text:00000000000000f4 .L0 
+     /tmp/cc0KYQRY.s:166    .text:00000000000000f8 .L0 
+     /tmp/cc0KYQRY.s:170    .text:00000000000000fc .L0 
+     /tmp/cc0KYQRY.s:171    .text:00000000000000fc .L0 
+     /tmp/cc0KYQRY.s:174    .text:0000000000000100 .L0 
+     /tmp/cc0KYQRY.s:176    .text:0000000000000104 .L0 
+     /tmp/cc0KYQRY.s:180    .text:000000000000010c .L0 
+     /tmp/cc0KYQRY.s:181    .text:000000000000010c .L0 
+     /tmp/cc0KYQRY.s:185    .text:0000000000000118 .L0 
+     /tmp/cc0KYQRY.s:186    .text:0000000000000118 .L0 
+     /tmp/cc0KYQRY.s:191    .text:0000000000000124 .L0 
+     /tmp/cc0KYQRY.s:192    .text:0000000000000128 .L0 
+     /tmp/cc0KYQRY.s:194    .text:000000000000012c .L0 
+     /tmp/cc0KYQRY.s:195    .text:000000000000012c .L0 
+     /tmp/cc0KYQRY.s:197    .text:0000000000000130 .L0 
+     /tmp/cc0KYQRY.s:200    .text:0000000000000134 .L0 
+     /tmp/cc0KYQRY.s:202    .text:0000000000000138 .L0 
+     /tmp/cc0KYQRY.s:150    .text:00000000000000e4 _ZN14BufferPrintingD1Ev
+     /tmp/cc0KYQRY.s:218    .text:0000000000000138 _ZN14BufferPrintingC2Ei
+     /tmp/cc0KYQRY.s:221    .text:0000000000000138 .L0 
+     /tmp/cc0KYQRY.s:223    .text:0000000000000138 .L0 
+     /tmp/cc0KYQRY.s:224    .text:000000000000013c .L0 
+     /tmp/cc0KYQRY.s:229    .text:000000000000014c .L0 
+     /tmp/cc0KYQRY.s:230    .text:000000000000014c .L0 
+     /tmp/cc0KYQRY.s:231    .text:000000000000014c .L0 
+     /tmp/cc0KYQRY.s:232    .text:000000000000014c .L0 
+     /tmp/cc0KYQRY.s:234    .text:0000000000000150 .L0 
+     /tmp/cc0KYQRY.s:239    .text:0000000000000158 .L0 
+     /tmp/cc0KYQRY.s:240    .text:0000000000000158 .L0 
+     /tmp/cc0KYQRY.s:242    .text:000000000000015c .L0 
+     /tmp/cc0KYQRY.s:243    .text:000000000000015c .L0 
+     /tmp/cc0KYQRY.s:248    .text:0000000000000168 .L0 
+     /tmp/cc0KYQRY.s:250    .text:000000000000016c .L0 
+     /tmp/cc0KYQRY.s:251    .text:000000000000016c .L0 
+     /tmp/cc0KYQRY.s:256    .text:000000000000017c .L0 
+     /tmp/cc0KYQRY.s:257    .text:000000000000017c .L0 
+     /tmp/cc0KYQRY.s:262    .text:000000000000018c .L0 
+     /tmp/cc0KYQRY.s:263    .text:000000000000018c .L0 
+     /tmp/cc0KYQRY.s:265    .text:0000000000000190 .L0 
+     /tmp/cc0KYQRY.s:268    .text:0000000000000194 .L0 
+     /tmp/cc0KYQRY.s:269    .text:0000000000000198 .L0 
+     /tmp/cc0KYQRY.s:271    .text:000000000000019c .L0 
+GAS LISTING /tmp/cc0KYQRY.s 			page 10
+
+
+     /tmp/cc0KYQRY.s:272    .text:000000000000019c .L0 
+     /tmp/cc0KYQRY.s:274    .text:00000000000001a0 .L0 
+     /tmp/cc0KYQRY.s:277    .text:00000000000001a4 .L0 
+     /tmp/cc0KYQRY.s:279    .text:00000000000001a8 .L0 
+     /tmp/cc0KYQRY.s:281    .text:00000000000001ac .L0 
+     /tmp/cc0KYQRY.s:218    .text:0000000000000138 _ZN14BufferPrintingC1Ei
+     /tmp/cc0KYQRY.s:296    .bss:0000000000000000 _ZN14BufferPrinting6tmpgetE
+     /tmp/cc0KYQRY.s:300    .bss:0000000000000004 _ZN14BufferPrinting6tmpputE
+     /tmp/cc0KYQRY.s:304    .bss:0000000000000008 _ZN14BufferPrinting3outE
+     /tmp/cc0KYQRY.s:308    .bss:0000000000000010 _ZN14BufferPrinting2inE
+     /tmp/cc0KYQRY.s:312    .bss:0000000000000018 _ZN14BufferPrinting3binE
+     /tmp/cc0KYQRY.s:316    .bss:0000000000000020 _ZN14BufferPrinting4boutE
+     /tmp/cc0KYQRY.s:323    .text:00000000000001ac .L0 
+     /tmp/cc0KYQRY.s:178    .text:000000000000010c .L6
+     /tmp/cc0KYQRY.s:1156   .debug_abbrev:0000000000000000 .Ldebug_abbrev0
+     /tmp/cc0KYQRY.s:2197   .debug_str:0000000000000537 .LASF79
+     /tmp/cc0KYQRY.s:2117   .debug_str:0000000000000289 .LASF80
+     /tmp/cc0KYQRY.s:2053   .debug_str:0000000000000021 .LASF81
+     /tmp/cc0KYQRY.s:5      .text:0000000000000000 .Ltext0
+     /tmp/cc0KYQRY.s:319    .text:00000000000001ac .Letext0
+     /tmp/cc0KYQRY.s:2047   .debug_line:0000000000000000 .Ldebug_line0
+     /tmp/cc0KYQRY.s:2155   .debug_str:00000000000003cd .LASF0
+     /tmp/cc0KYQRY.s:2159   .debug_str:00000000000003f2 .LASF1
+     /tmp/cc0KYQRY.s:2143   .debug_str:0000000000000375 .LASF2
+     /tmp/cc0KYQRY.s:2125   .debug_str:00000000000002e2 .LASF4
+     /tmp/cc0KYQRY.s:2187   .debug_str:00000000000004d4 .LASF3
+     /tmp/cc0KYQRY.s:2063   .debug_str:00000000000000ae .LASF5
+     /tmp/cc0KYQRY.s:2161   .debug_str:0000000000000405 .LASF6
+     /tmp/cc0KYQRY.s:2153   .debug_str:00000000000003ba .LASF7
+     /tmp/cc0KYQRY.s:2207   .debug_str:0000000000000639 .LASF8
+     /tmp/cc0KYQRY.s:2115   .debug_str:000000000000027b .LASF9
+     /tmp/cc0KYQRY.s:2167   .debug_str:0000000000000426 .LASF10
+     /tmp/cc0KYQRY.s:2199   .debug_str:00000000000005fb .LASF11
+     /tmp/cc0KYQRY.s:2065   .debug_str:00000000000000b5 .LASF12
+     /tmp/cc0KYQRY.s:2055   .debug_str:0000000000000040 .LASF13
+     /tmp/cc0KYQRY.s:2075   .debug_str:0000000000000133 .LASF14
+     /tmp/cc0KYQRY.s:2185   .debug_str:00000000000004be .LASF15
+     /tmp/cc0KYQRY.s:2087   .debug_str:0000000000000198 .LASF16
+     /tmp/cc0KYQRY.s:2171   .debug_str:000000000000043f .LASF28
+     /tmp/cc0KYQRY.s:2089   .debug_str:00000000000001ae .LASF21
+     /tmp/cc0KYQRY.s:2147   .debug_str:000000000000039b .LASF57
+     /tmp/cc0KYQRY.s:2215   .debug_str:0000000000000673 .LASF63
+     /tmp/cc0KYQRY.s:2109   .debug_str:0000000000000239 .LASF17
+     /tmp/cc0KYQRY.s:2193   .debug_str:0000000000000509 .LASF19
+     /tmp/cc0KYQRY.s:2165   .debug_str:000000000000041d .LASF18
+     /tmp/cc0KYQRY.s:2071   .debug_str:0000000000000100 .LASF20
+     /tmp/cc0KYQRY.s:2085   .debug_str:0000000000000182 .LASF30
+     /tmp/cc0KYQRY.s:2149   .debug_str:00000000000003a4 .LASF22
+     /tmp/cc0KYQRY.s:2107   .debug_str:000000000000022d .LASF23
+     /tmp/cc0KYQRY.s:2213   .debug_str:0000000000000666 .LASF24
+     /tmp/cc0KYQRY.s:2201   .debug_str:000000000000060a .LASF25
+     /tmp/cc0KYQRY.s:2111   .debug_str:0000000000000247 .LASF26
+     /tmp/cc0KYQRY.s:2073   .debug_str:000000000000011d .LASF27
+     /tmp/cc0KYQRY.s:2189   .debug_str:00000000000004e6 .LASF29
+     /tmp/cc0KYQRY.s:2181   .debug_str:00000000000004a0 .LASF31
+     /tmp/cc0KYQRY.s:2191   .debug_str:00000000000004f6 .LASF32
+     /tmp/cc0KYQRY.s:2081   .debug_str:0000000000000151 .LASF33
+GAS LISTING /tmp/cc0KYQRY.s 			page 11
+
+
+     /tmp/cc0KYQRY.s:2103   .debug_str:000000000000021c .LASF34
+     /tmp/cc0KYQRY.s:2113   .debug_str:0000000000000257 .LASF35
+     /tmp/cc0KYQRY.s:2129   .debug_str:0000000000000303 .LASF36
+     /tmp/cc0KYQRY.s:2067   .debug_str:00000000000000c5 .LASF37
+     /tmp/cc0KYQRY.s:2079   .debug_str:0000000000000146 .LASF38
+     /tmp/cc0KYQRY.s:2061   .debug_str:000000000000008c .LASF39
+     /tmp/cc0KYQRY.s:2137   .debug_str:000000000000035c .LASF40
+     /tmp/cc0KYQRY.s:2059   .debug_str:0000000000000068 .LASF41
+     /tmp/cc0KYQRY.s:2203   .debug_str:0000000000000620 .LASF82
+     /tmp/cc0KYQRY.s:2101   .debug_str:0000000000000216 .LASF42
+     /tmp/cc0KYQRY.s:2205   .debug_str:000000000000062a .LASF43
+     /tmp/cc0KYQRY.s:2119   .debug_str:00000000000002a0 .LASF44
+     /tmp/cc0KYQRY.s:2099   .debug_str:0000000000000207 .LASF45
+     /tmp/cc0KYQRY.s:2183   .debug_str:00000000000004b7 .LASF46
+     /tmp/cc0KYQRY.s:2093   .debug_str:00000000000001d0 .LASF47
+     /tmp/cc0KYQRY.s:2139   .debug_str:0000000000000369 .LASF48
+     /tmp/cc0KYQRY.s:2051   .debug_str:000000000000001a .LASF49
+     /tmp/cc0KYQRY.s:2077   .debug_str:000000000000013f .LASF50
+     /tmp/cc0KYQRY.s:2209   .debug_str:0000000000000649 .LASF51
+     /tmp/cc0KYQRY.s:2133   .debug_str:000000000000032a .LASF52
+     /tmp/cc0KYQRY.s:2095   .debug_str:00000000000001d5 .LASF53
+     /tmp/cc0KYQRY.s:2123   .debug_str:00000000000002c9 .LASF54
+     /tmp/cc0KYQRY.s:2211   .debug_str:0000000000000661 .LASF55
+     /tmp/cc0KYQRY.s:2145   .debug_str:0000000000000383 .LASF56
+     /tmp/cc0KYQRY.s:2177   .debug_str:000000000000046a .LASF83
+     /tmp/cc0KYQRY.s:2127   .debug_str:00000000000002e9 .LASF84
+     /tmp/cc0KYQRY.s:2217   .debug_str:0000000000000691 .LASF58
+     /tmp/cc0KYQRY.s:2195   .debug_str:000000000000051f .LASF59
+     /tmp/cc0KYQRY.s:2121   .debug_str:00000000000002ae .LASF60
+     /tmp/cc0KYQRY.s:2135   .debug_str:0000000000000342 .LASF61
+     /tmp/cc0KYQRY.s:2151   .debug_str:00000000000003b0 .LASF62
+     /tmp/cc0KYQRY.s:2131   .debug_str:000000000000030f .LASF64
+     /tmp/cc0KYQRY.s:2049   .debug_str:0000000000000000 .LASF65
+     /tmp/cc0KYQRY.s:2163   .debug_str:0000000000000418 .LASF66
+     /tmp/cc0KYQRY.s:2083   .debug_str:0000000000000168 .LASF67
+     /tmp/cc0KYQRY.s:2097   .debug_str:00000000000001ee .LASF68
+     /tmp/cc0KYQRY.s:2157   .debug_str:00000000000003da .LASF69
+     /tmp/cc0KYQRY.s:2175   .debug_str:0000000000000451 .LASF70
+     /tmp/cc0KYQRY.s:2179   .debug_str:0000000000000484 .LASF71
+     /tmp/cc0KYQRY.s:2091   .debug_str:00000000000001b4 .LASF72
+     /tmp/cc0KYQRY.s:2173   .debug_str:000000000000044c .LASF73
+     /tmp/cc0KYQRY.s:2069   .debug_str:00000000000000e8 .LASF75
+     /tmp/cc0KYQRY.s:219    .text:0000000000000138 .LFB34
+     /tmp/cc0KYQRY.s:282    .text:00000000000001ac .LFE34
+     /tmp/cc0KYQRY.s:1923   .debug_loc:0000000000000000 .LLST5
+     /tmp/cc0KYQRY.s:1941   .debug_loc:000000000000004c .LLST6
+     /tmp/cc0KYQRY.s:246    .text:0000000000000168 .LVL20
+     /tmp/cc0KYQRY.s:254    .text:000000000000017c .LVL21
+     /tmp/cc0KYQRY.s:260    .text:000000000000018c .LVL22
+     /tmp/cc0KYQRY.s:2169   .debug_str:0000000000000435 .LASF74
+     /tmp/cc0KYQRY.s:2057   .debug_str:0000000000000050 .LASF76
+     /tmp/cc0KYQRY.s:151    .text:00000000000000e4 .LFB31
+     /tmp/cc0KYQRY.s:203    .text:0000000000000138 .LFE31
+     /tmp/cc0KYQRY.s:1955   .debug_loc:0000000000000085 .LLST4
+     /tmp/cc0KYQRY.s:177    .text:000000000000010c .LVL14
+     /tmp/cc0KYQRY.s:183    .text:0000000000000118 .LVL15
+     /tmp/cc0KYQRY.s:188    .text:0000000000000124 .LVL16
+GAS LISTING /tmp/cc0KYQRY.s 			page 12
+
+
+     /tmp/cc0KYQRY.s:82     .text:0000000000000070 .LFB29
+     /tmp/cc0KYQRY.s:145    .text:00000000000000e4 .LFE29
+     /tmp/cc0KYQRY.s:1973   .debug_loc:00000000000000d1 .LLST2
+     /tmp/cc0KYQRY.s:1991   .debug_loc:000000000000011d .LLST3
+     /tmp/cc0KYQRY.s:105    .text:000000000000009c .LVL9
+     /tmp/cc0KYQRY.s:129    .text:00000000000000cc .LVL10
+     /tmp/cc0KYQRY.s:10     .text:0000000000000000 .LFB28
+     /tmp/cc0KYQRY.s:76     .text:0000000000000070 .LFE28
+     /tmp/cc0KYQRY.s:2005   .debug_loc:0000000000000156 .LLST0
+     /tmp/cc0KYQRY.s:2023   .debug_loc:00000000000001a2 .LLST1
+     /tmp/cc0KYQRY.s:33     .text:0000000000000028 .LVL2
+     /tmp/cc0KYQRY.s:57     .text:0000000000000054 .LVL4
+     /tmp/cc0KYQRY.s:2105   .debug_str:0000000000000227 .LASF77
+     /tmp/cc0KYQRY.s:2141   .debug_str:000000000000036e .LASF78
+     /tmp/cc0KYQRY.s:222    .text:0000000000000138 .LVL18
+     /tmp/cc0KYQRY.s:244    .text:0000000000000160 .LVL19
+     /tmp/cc0KYQRY.s:275    .text:00000000000001a0 .LVL23
+     /tmp/cc0KYQRY.s:156    .text:00000000000000e4 .LVL12
+     /tmp/cc0KYQRY.s:172    .text:0000000000000100 .LVL13
+     /tmp/cc0KYQRY.s:198    .text:0000000000000130 .LVL17
+     /tmp/cc0KYQRY.s:85     .text:0000000000000070 .LVL7
+     /tmp/cc0KYQRY.s:103    .text:0000000000000094 .LVL8
+     /tmp/cc0KYQRY.s:138    .text:00000000000000d8 .LVL11
+     /tmp/cc0KYQRY.s:14     .text:0000000000000000 .LVL0
+     /tmp/cc0KYQRY.s:31     .text:0000000000000020 .LVL1
+     /tmp/cc0KYQRY.s:68     .text:0000000000000064 .LVL5
+     /tmp/cc0KYQRY.s:43     .text:0000000000000038 .LVL3
+     /tmp/cc0KYQRY.s:71     .text:0000000000000068 .LVL6
+     /tmp/cc0KYQRY.s:324    .debug_info:0000000000000000 .Ldebug_info0
+     /tmp/cc0KYQRY.s:206    .gcc_except_table:0000000000000000 .LLSDA31
+
+UNDEFINED SYMBOLS
+_ZN12SemaphoreABI10semwaitABIEPS_
+_ZN12SemaphoreABI12semsignalABIEPS_
+_ZdlPv
+_ZN12SemaphoreABI11semcloseABIEPS_
+__gxx_personality_v0
+_Znam
+_ZN12SemaphoreABI10semopenABIEPPS_i
